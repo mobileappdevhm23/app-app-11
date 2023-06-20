@@ -1,8 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-
+import PushNotifications from './PushNotification';
 
 export default function App() {
+  const expoPushToken = ""; // Füge hier den Expo Push-Token ein
+
+  const handlePressNotification = async () => {
+    await PushNotifications.sendPushNotification(expoPushToken);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
@@ -11,9 +17,7 @@ export default function App() {
         </TouchableOpacity>
       </View>
       <View style={styles.imageContainer}>
-
         <Image source={require('./img/Senf.png')} style={styles.image} />
-
       </View>
 
       <StatusBar style="auto" />
