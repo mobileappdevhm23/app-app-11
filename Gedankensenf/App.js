@@ -1,97 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { useEffect, useState } from 'react';
-import * as Notifications from 'expo-notifications';
-import PushNotifications from './PushNotification';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './Home';
+import Senfabgabe from './Senfabgabe';
 
-export default function App() {
-  const [expoPushToken, setExpoPushToken] = useState('');
+const Stack = createNativeStackNavigator();
 
-  useEffect(() => {
-    // Funktion zum Abrufen des Expo Push-Tokens
-    const getExpoPushToken = async () => {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
-        return;
-      }
-      const token = (await Notifications.getExpoPushTokenAsync()).data;
-      setExpoPushToken(token);
-    };
-
-    getExpoPushToken();
-
-    // Aufräumarbeiten
-    return () => {
-      Notifications.removeNotificationSubscription();
-    };
-  }, []);
-
-  const handlePressNotification = async () => {
-    await PushNotifications.sendPushNotification(expoPushToken);
-  };
-
+const App = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handlePressNotification}
-        >
-          <Text style={styles.buttonText}>Senf abgeben</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.imageContainer}>
-        <Image source={require('./img/Senf.png')} style={styles.image} />
-      </View>
-
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Senfabgabe"
+          component={Senfabgabe}
+        // options={{ headerShown: false }}
+        />
+        {/* Weitere Bildschirme hinzufügen */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#343434',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    backgroundColor: '#E6B31E',
-    paddingVertical: 15,
-    paddingHorizontal: 45,
-    borderRadius: 25,
-    marginBottom: 10,
-  },
-  buttonContainer: {
-    position: 'absolute',
-    top: '50%',
-    transform: [{ translateY: -25 }],
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '500',
-    fontSize: 18,
-  },
-  imageContainer: {
-    flex: 1,
-    alignItems: 'baseline',
-    justifyContent: 'center',
-  },
-  image: {
-    position: 'absolute',
-    alignSelf: 'flex-start',
-    bottom: -5,
-    left: -190,
-    height: 330,
-    width: 330,
-    resizeMode: 'contain',
-    opacity: 0.8,
-  },
-});
+export default App;
