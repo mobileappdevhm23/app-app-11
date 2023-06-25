@@ -1,9 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
+import * as Notifications from 'expo-notifications';
 import PushNotifications from './PushNotification';
 
 export default function App() {
-  const expoPushToken = ""; // Füge hier den Expo Push-Token ein
+  const [expoPushToken, setExpoPushToken] = useState('');
+
+  useEffect(() => {
+    // Funktion zum Abrufen des Expo Push-Tokens
+    const getExpoPushToken = async () => {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      const token = (await Notifications.getExpoPushTokenAsync()).data;
+      setExpoPushToken(token);
+    };
+
+    getExpoPushToken();
+
+    // Aufräumarbeiten
+    return () => {
+      Notifications.removeNotificationSubscription();
+    };
+  }, []);
 
   const handlePressNotification = async () => {
     await PushNotifications.sendPushNotification(expoPushToken);
@@ -12,7 +39,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handlePressNotification}>
           <Text style={styles.buttonText}>Senf abgeben</Text>
         </TouchableOpacity>
       </View>
