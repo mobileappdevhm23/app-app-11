@@ -39,7 +39,10 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handlePressNotification}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handlePressNotification}
+        >
           <Text style={styles.buttonText}>Senf abgeben</Text>
         </TouchableOpacity>
       </View>
