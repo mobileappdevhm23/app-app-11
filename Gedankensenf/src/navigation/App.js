@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './src/pages/Home';
-import Senfabgabe from './src/pages/Senfabgabe';
+import Home from '../pages/Home';
+import Senfabgabe from '../pages/Senfabgabe';
 import * as Notifications from 'expo-notifications';
-import Senfgespeichert from './src/pages/Senfgespeichert';
+import Senfgespeichert from '../pages/Senfgespeichert';
+import SignIn from '../AuthStack/SignIn';
 
 // First, set the handler that will cause the notification
 // to show the alert
@@ -34,9 +35,13 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+          name="SignIn"
+          component={SignIn}
+        />
+        <Stack.Screen
           name="Home"
           component={Home}
-          options={{ headerShown: false }}
+        // options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Senfabgabe"
@@ -47,6 +52,7 @@ const App = () => {
           name="Senfgespeichert"
           component={Senfgespeichert}
         />
+
         {/* Weitere Bildschirme hinzufügen */}
       </Stack.Navigator>
     </NavigationContainer>
