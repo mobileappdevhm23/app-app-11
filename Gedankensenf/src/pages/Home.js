@@ -50,7 +50,7 @@ export default function Home() {
         </TouchableOpacity>
       </View>
       <View style={styles.imageContainer}>
-        <Image source={require('./img/Senf.png')} style={styles.image} />
+        <Image source={require('../img/Senf.png')} style={styles.image} />
       </View>
 
       <StatusBar style="auto" />

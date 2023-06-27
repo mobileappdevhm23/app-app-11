@@ -5,7 +5,7 @@ import { Image, StyleSheet, View, Text } from 'react-native';
 export default function Senfgespeichert() {
     return (
         <View style={styles.container}>
-            <Image source={require('./img/Senf.png')} style={styles.backgroundImage} />
+            <Image source={require('../img/Senf.png')} style={styles.backgroundImage} />
             <View style={styles.contentContainer}>
                 <Text style={styles.title}>Vielen Dank!</Text>
                 <Text style={styles.text}>dein Senf wurde gespeichert!</Text>

@@ -14,7 +14,7 @@ export default function Senfabgabe() {
 
     return (
         <View style={styles.container}>
-            <Image source={require('./img/Senf.png')} style={styles.backgroundImage} />
+            <Image source={require('../img/Senf.png')} style={styles.backgroundImage} />
             <View style={styles.contentContainer}>
                 <TextInput
                     style={styles.input}
