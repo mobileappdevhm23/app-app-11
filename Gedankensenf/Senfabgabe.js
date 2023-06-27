@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Image, StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function Senfabgabe() {
+    const navigation = useNavigation();
     const [text, onChangeText] = useState('');
 
     const handleConfirm = () => {
@@ -24,7 +26,11 @@ export default function Senfabgabe() {
                     textAlignVertical="top"
                 />
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button} onPress={handleConfirm}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('Senfgespeichert')}
+                    // onPress={handleConfirm}
+                    >
                         <Text style={styles.buttonText}>Fertig</Text>
                     </TouchableOpacity>
                 </View>
