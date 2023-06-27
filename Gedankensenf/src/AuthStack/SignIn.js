@@ -1,6 +1,8 @@
-const { useState } = React;
+import React,{useState} from "react";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-export const SignInScreen = () => {
+
+export default function SignIn () {
   const auth = getAuth();
 
   const [value, setValue] = useState({

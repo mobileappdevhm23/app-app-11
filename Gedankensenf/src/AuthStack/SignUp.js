@@ -1,6 +1,8 @@
-const { useState } = React;
+import React,{useState} from "react";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-export const SignUpScreen = () => {
+
+export default function SignUpScreen () {
   const auth = getAuth();
 
   const navigation = useNavigation();
