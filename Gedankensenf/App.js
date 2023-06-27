@@ -2,9 +2,9 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/pages/Home';
-import Senfabgabe from './Senfabgabe';
+import Senfabgabe from './src/pages/Senfabgabe';
 import * as Notifications from 'expo-notifications';
-import Senfgespeichert from './Senfgespeichert';
+import Senfgespeichert from './src/pages/Senfgespeichert';
 
 // First, set the handler that will cause the notification
 // to show the alert
