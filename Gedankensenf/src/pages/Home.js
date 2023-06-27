@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useEffect, useState } from 'react';
 import * as Notifications from 'expo-notifications';
-import PushNotifications from './PushNotification';
+import PushNotifications from '../../PushNotification';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Home() {

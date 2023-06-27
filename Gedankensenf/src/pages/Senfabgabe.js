@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         position: 'absolute',
         resizeMode: 'cover',
+        opacity: 0.8,
         zIndex: -1,
     },
 });
