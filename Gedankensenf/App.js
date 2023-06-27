@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './Home';
 import Senfabgabe from './Senfabgabe';
 import * as Notifications from 'expo-notifications';
+import Senfgespeichert from './Senfgespeichert';
 
 // First, set the handler that will cause the notification
 // to show the alert
@@ -41,6 +42,10 @@ const App = () => {
           name="Senfabgabe"
           component={Senfabgabe}
         // options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Senfgespeichert"
+          component={Senfgespeichert}
         />
         {/* Weitere Bildschirme hinzufügen */}
       </Stack.Navigator>
