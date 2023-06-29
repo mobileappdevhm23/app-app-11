@@ -6,6 +6,7 @@ import Senfabgabe from '../pages/Senfabgabe';
 import * as Notifications from 'expo-notifications';
 import Senfgespeichert from '../pages/Senfgespeichert';
 import SignIn from '../AuthStack/SignIn';
+import "../config/firebase";
 
 // First, set the handler that will cause the notification
 // to show the alert
