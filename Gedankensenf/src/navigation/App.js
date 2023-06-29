@@ -36,9 +36,10 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-      <Stack.Screen
+        <Stack.Screen
           name="SignUp"
           component={SignUp}
+        // options={{ headerShown: false }}
         />
         <Stack.Screen
           name="SignIn"
