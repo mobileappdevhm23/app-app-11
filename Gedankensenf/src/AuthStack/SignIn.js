@@ -27,6 +27,7 @@ export default function SignIn() {
 
     try {
       await signInWithEmailAndPassword(auth, value.email, value.password);
+      navigation.navigate('Home');
     } catch (error) {
       setValue({
         ...value,

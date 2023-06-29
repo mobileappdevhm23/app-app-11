@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import * as Notifications from 'expo-notifications';
 import PushNotifications from './PushNotification';
 import { useNavigation } from '@react-navigation/native';
+import { Button } from "react-native-elements";
 
 export default function Home() {
   const navigation = useNavigation();
@@ -35,19 +36,14 @@ export default function Home() {
   }, []);
 
   const handlePressNotification = async () => {
+    navigation.navigate('Senfabgabe');
     await PushNotifications.sendPushNotification(expoPushToken);
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          // onPress={handlePressNotification}
-          onPress={() => navigation.navigate('Senfabgabe')}
-        >
-          <Text style={styles.buttonText}>Senf abgeben</Text>
-        </TouchableOpacity>
+      <Button title="Senf abgeben" buttonStyle={styles.smallControl} onPress={() => navigation.navigate('Senfabgeben')} /> 
       </View>
       <View style={styles.imageContainer}>
         <Image source={require('../img/Senf.png')} style={styles.image} />

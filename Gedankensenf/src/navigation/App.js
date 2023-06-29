@@ -37,30 +37,27 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="SignUp"
-          component={SignUp}
-        // options={{ headerShown: false }}
-        />
-        <Stack.Screen
           name="SignIn"
           component={SignIn}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Home"
           component={Home}
-        // options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Senfabgabe"
           component={Senfabgabe}
-        // options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Senfgespeichert"
           component={Senfgespeichert}
         />
-
-        {/* Weitere Bildschirme hinzufügen */}
       </Stack.Navigator>
     </NavigationContainer>
   );
