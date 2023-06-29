@@ -1,8 +1,11 @@
-import React,{useState} from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Button } from "react-native-elements";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
+import { useNavigation } from "@react-navigation/native";
 
-export default function SignUpScreen () {
+export default function SignUpScreen() {
   const auth = getAuth();
 
   const navigation = useNavigation();
@@ -61,14 +64,13 @@ export default function SignUpScreen () {
       </View>
     </View>
   );
-};
+}
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
     backgroundColor: "#fff",
     alignItems: "center",
-    color: "black",
     justifyContent: "center",
     flex: 1,
   },
@@ -89,4 +91,4 @@ const styles = {
     color: "#000000",
     backgroundColor: "#D54826FF",
   },
-};
+});

@@ -7,6 +7,7 @@ import * as Notifications from 'expo-notifications';
 import Senfgespeichert from '../pages/Senfgespeichert';
 import SignIn from '../AuthStack/SignIn';
 import "../config/firebase";
+import SignUp from "../AuthStack/SignUp"
 
 // First, set the handler that will cause the notification
 // to show the alert
@@ -35,6 +36,10 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+        />
         <Stack.Screen
           name="SignIn"
           component={SignIn}
