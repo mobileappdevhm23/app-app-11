@@ -1,58 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { useEffect, useState } from 'react';
-import * as Notifications from 'expo-notifications';
-import PushNotifications from './PushNotification';
+//import { useEffect, useState } from 'react';
+//import * as Notifications from 'expo-notifications';
+//import PushNotifications from './PushNotification';
 import { useNavigation } from '@react-navigation/native';
-import { Button } from "react-native-elements";
 
 export default function Home() {
   const navigation = useNavigation();
-  const [expoPushToken, setExpoPushToken] = useState('');
-
-  useEffect(() => {
-    // Funktion zum Abrufen des Expo Push-Tokens
-    const getExpoPushToken = async () => {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
-        return;
-      }
-      const token = (await Notifications.getExpoPushTokenAsync()).data;
-      setExpoPushToken(token);
-    };
-
-    getExpoPushToken();
-
-    // Aufräumarbeiten
-    return () => {
-      Notifications.removeNotificationSubscription();
-    };
-  }, []);
-
-  const handlePressNotification = async () => {
-    navigation.navigate('Senfabgabe');
-    await PushNotifications.sendPushNotification(expoPushToken);
-  };
 
   return (
     <View style={styles.container}>
+      <Image source={require('../img/Senf.png')} style={styles.image} />
       <View style={styles.buttonContainer}>
-      <Button title="Senf abgeben" buttonStyle={styles.smallControl} onPress={() => navigation.navigate('Senfabgeben')} /> 
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Senfabgabe')}
+                      // onPress={handleConfirm}
+          >
+            <Text style={styles.buttonText}>Senf abgeben</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.imageContainer}>
-        <Image source={require('../img/Senf.png')} style={styles.image} />
+        
       </View>
 
       <StatusBar style="auto" />
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -87,9 +63,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'flex-start',
     bottom: -5,
-    left: -190,
+    left: 1,
     height: 330,
-    width: 330,
+    width: 335,
     resizeMode: 'contain',
     opacity: 0.8,
   },
