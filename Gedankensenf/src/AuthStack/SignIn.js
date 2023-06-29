@@ -1,9 +1,10 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Button } from "react-native-elements";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 
-
-export default function SignIn () {
+export default function SignIn() {
   const auth = getAuth();
 
   const [value, setValue] = useState({
@@ -32,38 +33,36 @@ export default function SignIn () {
   };
 
   return (
-    <div style={styles.container}>
-      <h1>Sign in screen!</h1>
+    <View style={styles.container}>
+      <Text>Sign in screen!</Text>
 
       {value.error && (
-        <div style={styles.error}>
-          <p>{value.error}</p>
-        </div>
+        <View style={styles.error}>
+          <Text>{value.error}</Text>
+        </View>
       )}
 
-      <div style={styles.controls}>
-        <input
-          type="text"
+      <View style={styles.controls}>
+        <TextInput
           placeholder="Email"
           value={value.email}
-          onChange={(event) => setValue({ ...value, email: event.target.value })}
+          onChangeText={(text) => setValue({ ...value, email: text })}
         />
 
-        <input
-          type="password"
+        <TextInput
           placeholder="Password"
           value={value.password}
-          onChange={(event) => setValue({ ...value, password: event.target.value })}
+          onChangeText={(text) => setValue({ ...value, password: text })}
+          secureTextEntry={true}
         />
-        <button style={styles.control} onClick={signUp}>
-          Sign in
-        </button>
-      </div>
-    </div>
+
+        <Button title="Sign in" buttonStyle={styles.control} onPress={signUp} />
+      </View>
+    </View>
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
     backgroundColor: "#fff",
@@ -72,6 +71,7 @@ const styles = {
   },
 
   controls: {
+    flex: 1,
     width: 400,
     height: 40,
   },
@@ -86,4 +86,4 @@ const styles = {
     color: "#fff",
     backgroundColor: "#D54826FF",
   },
-};
+});

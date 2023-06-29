@@ -34,35 +34,32 @@ export default function SignUpScreen () {
   };
 
   return (
-    <div style={styles.container}>
-      <h1>Sign up screen!</h1>
+    <View style={styles.container}>
+      <Text>Sign in screen!</Text>
 
       {value.error && (
-        <div style={styles.error}>
-          <p>{value.error}</p>
-        </div>
+        <View style={styles.error}>
+          <Text>{value.error}</Text>
+        </View>
       )}
 
-      <div style={styles.controls}>
-        <input
-          type="text"
+      <View style={styles.controls}>
+        <TextInput
           placeholder="Email"
           value={value.email}
-          onChange={(event) => setValue({ ...value, email: event.target.value })}
+          onChangeText={(text) => setValue({ ...value, email: text })}
         />
 
-        <input
-          type="password"
+        <TextInput
           placeholder="Password"
           value={value.password}
-          onChange={(event) => setValue({ ...value, password: event.target.value })}
+          onChangeText={(text) => setValue({ ...value, password: text })}
+          secureTextEntry={true}
         />
 
-        <button style={styles.control} onClick={signUp}>
-          Sign up
-        </button>
-      </div>
-    </div>
+        <Button title="Sign in" buttonStyle={styles.control} onPress={signUp} />
+      </View>
+    </View>
   );
 };
 
