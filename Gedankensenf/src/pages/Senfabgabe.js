@@ -23,19 +23,34 @@ export default function Senfabgabe() {
     //     console.log('Bestätigter Text:', text);
     // }
 
+    const handleConfirm = async () => {
+        try {
+            // Speichere den Text in Firebase unter der Benutzer-ID
+            await set(ref(db, 'inputs/' + userId), text);
+
+            console.log(`Saved to 'inputs/${userId}': ${text}`);
+
+            // Navigiere auf den Bestätigungsbildschirm
+            navigation.navigate('Senfgespeichert');
+
+        } catch (error) {
+            console.error("Fehler beim Speichern des Texts:", error);
+        }
+
+    };
+
     // const handleConfirm = async () => {
     //     try {
-    //         // Speichere den Text in Firebase unter der Benutzer-ID
+    //         // Speichern des Texts in Firebase unter der Benutzer-ID
     //         await set(ref(db, 'inputs/' + userId), text);
 
-    //         console.log(`Saved to 'inputs/${userId}': ${text}`);
-
-    //         // Navigiere auf den Bestätigungsbildschirm
+    //         // Navigieren zum Bestätigungsbildschirm
     //         navigation.navigate('Senfgespeichert');
-
     //     } catch (error) {
     //         console.error("Fehler beim Speichern des Texts:", error);
     //     }
+
+
 
     // };
 
