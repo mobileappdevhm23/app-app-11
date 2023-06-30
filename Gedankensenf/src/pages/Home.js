@@ -68,5 +68,6 @@ const styles = StyleSheet.create({
     width: 335,
     resizeMode: 'contain',
     opacity: 0.8,
+    zIndex: -1,
   },
 });
