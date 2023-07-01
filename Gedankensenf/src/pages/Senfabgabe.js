@@ -5,11 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
-// import 'firebase/database';
-// import { getDatabase, ref, push, set } from "firebase/database";
-// import { getAuth } from "firebase/auth";
-
-
 
 export default function Senfabgabe() {
     const navigation = useNavigation();
@@ -19,40 +14,6 @@ export default function Senfabgabe() {
     const db = getDatabase();
 
 
-    // const handleConfirm = () => {
-    //     console.log('Bestätigter Text:', text);
-    // }
-
-    const handleConfirm = async () => {
-        try {
-            // Speichere den Text in Firebase unter der Benutzer-ID
-            await set(ref(db, 'inputs/' + userId), text);
-
-            console.log(`Saved to 'inputs/${userId}': ${text}`);
-
-            // Navigiere auf den Bestätigungsbildschirm
-            navigation.navigate('Senfgespeichert');
-
-        } catch (error) {
-            console.error("Fehler beim Speichern des Texts:", error);
-        }
-
-    };
-
-    // const handleConfirm = async () => {
-    //     try {
-    //         // Speichern des Texts in Firebase unter der Benutzer-ID
-    //         await set(ref(db, 'inputs/' + userId), text);
-
-    //         // Navigieren zum Bestätigungsbildschirm
-    //         navigation.navigate('Senfgespeichert');
-    //     } catch (error) {
-    //         console.error("Fehler beim Speichern des Texts:", error);
-    //     }
-
-
-
-    // };
 
     const handleConfirm = async () => {
         try {
@@ -64,29 +25,8 @@ export default function Senfabgabe() {
         } catch (error) {
             console.error("Fehler beim Speichern des Texts:", error);
         }
-
-
-
     };
 
-    // console.log('Pfad:', 'inputs/' + userId);
-    // console.log('Text:', text);
-
-    // const handleConfirm = () => {
-    //     // Erhalte die uid des derzeit angemeldeten Benutzers
-    //     const user = getAuth().currentUser;
-    //     const uid = user ? user.uid : null;
-
-    //     if (uid) {
-    //         // Speichere den Text in Firebase unter der uid des Benutzers
-    //         push(ref(getDatabase(), 'inputs/' + uid), text);
-    //     } else {
-    //         console.error("Kein Benutzer angemeldet");
-    //     }
-
-    //     // Navigiere auf den Bestätigungsbildschirm
-    //     navigation.navigate('Senfgespeichert');
-    // };
 
     return (
         <View style={styles.container}>
