@@ -8,6 +8,7 @@ import Senfgespeichert from '../pages/Senfgespeichert';
 import SignIn from '../AuthStack/SignIn';
 import "../config/firebase";
 import SignUp from "../AuthStack/SignUp"
+import Senflesen from '../pages/Senflesen';
 
 // First, set the handler that will cause the notification
 // to show the alert
@@ -53,6 +54,10 @@ const App = () => {
         <Stack.Screen
           name="Senfabgabe"
           component={Senfabgabe}
+        />
+        <Stack.Screen
+          name="Senflesen"
+          component={Senflesen}
         />
         <Stack.Screen
           name="Senfgespeichert"

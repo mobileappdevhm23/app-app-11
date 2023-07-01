@@ -1,43 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { Image, StyleSheet, View, TouchableOpacity, Text, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, onValue, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
-// import 'firebase/database';
-// import { getDatabase, ref, push, set } from "firebase/database";
-// import { getAuth } from "firebase/auth";
-
-
-
-export default function Senfabgabe() {
+export default function Senflesen() {
     const navigation = useNavigation();
+    const [randomText, setRandomText] = useState('');
     const [text, onChangeText] = useState('');
     const auth = getAuth();
     const userId = auth.currentUser.uid;
     const db = getDatabase();
 
+    useEffect(() => {
+        const textsRef = ref(db, 'inputs');
+        const listener = onValue(textsRef, (snapshot) => {
+            const texts = snapshot.val();
+            if (texts) {
+                const textArray = Object.values(texts);
+                const randomIndex = Math.floor(Math.random() * textArray.length);
+                const randomText = textArray[randomIndex];
+                setRandomText(randomText);
+            }
+        });
 
-    // const handleConfirm = () => {
-    //     console.log('Bestätigter Text:', text);
-    // }
-
-    // const handleConfirm = async () => {
-    //     try {
-    //         // Speichere den Text in Firebase unter der Benutzer-ID
-    //         await set(ref(db, 'inputs/' + userId), text);
-
-    //         console.log(`Saved to 'inputs/${userId}': ${text}`);
-
-    //         // Navigiere auf den Bestätigungsbildschirm
-    //         navigation.navigate('Senfgespeichert');
-
-    //     } catch (error) {
-    //         console.error("Fehler beim Speichern des Texts:", error);
-    //     }
-
-    // };
+        // Cleanup function to remove the listener when component unmounts
+        return () => {
+            listener();
+        };
+    }, []);
 
     const handleConfirm = async () => {
         try {
@@ -49,49 +41,20 @@ export default function Senfabgabe() {
         } catch (error) {
             console.error("Fehler beim Speichern des Texts:", error);
         }
-
-
-
     };
-
-    // console.log('Pfad:', 'inputs/' + userId);
-    // console.log('Text:', text);
-
-    // const handleConfirm = () => {
-    //     // Erhalte die uid des derzeit angemeldeten Benutzers
-    //     const user = getAuth().currentUser;
-    //     const uid = user ? user.uid : null;
-
-    //     if (uid) {
-    //         // Speichere den Text in Firebase unter der uid des Benutzers
-    //         push(ref(getDatabase(), 'inputs/' + uid), text);
-    //     } else {
-    //         console.error("Kein Benutzer angemeldet");
-    //     }
-
-    //     // Navigiere auf den Bestätigungsbildschirm
-    //     navigation.navigate('Senfgespeichert');
-    // };
 
     return (
         <View style={styles.container}>
             <Image source={require('../img/Senf.png')} style={styles.backgroundImage} />
             <View style={styles.contentContainer}>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={onChangeText}
-                    value={text}
-                    placeholder='gib deinen Senf ab...'
-                    placeholderTextColor='grey'
+                <Text style={styles.text}
                     multiline={true}
-                    textAlignVertical="top"
-                />
+                    textAlignVertical="top">{randomText}</Text>
+                <StatusBar style="auto" />
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
                         style={styles.button}
                         onPress={handleConfirm}
-                    // onPress={() => navigation.navigate('Senfgespeichert')}
-                    // onPress={handleConfirm}
                     >
                         <Text style={styles.buttonText}>Fertig</Text>
                     </TouchableOpacity>
@@ -102,8 +65,6 @@ export default function Senfabgabe() {
     );
 }
 
-
-// converst hex color codes into rgba
 const hexToRgba = (hex, opacity) => {
     hex = hex.replace('#', '');
     const r = parseInt(hex.substring(0, 2), 16);
@@ -125,7 +86,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    input: {
+    text: {
         width: 320,
         height: 250,
         margin: 12,
@@ -137,8 +98,8 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         alignItems: 'center',
-        paddingLeft: 100,
-        paddingTop: 20,
+        paddingLeft: 200,
+        paddingTop: 300,
     },
     button: {
         backgroundColor: '#E6B31E',
