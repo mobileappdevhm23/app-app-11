@@ -4,6 +4,7 @@ import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 //import * as Notifications from 'expo-notifications';
 //import PushNotifications from './PushNotification';
 import { useNavigation } from '@react-navigation/native';
+import React, { useEffect } from 'react';
 
 export default function Home() {
   const navigation = useNavigation();

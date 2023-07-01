@@ -1,122 +1,99 @@
-import { useState, useEffect, useRef } from 'react';
-import { Text, View, Button, Platform } from 'react-native';
-import * as Device from 'expo-device';
+import React, { useEffect } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { Image, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
-import { db } from '../config/firebase';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+export default function PushNotification() {
+  const navigation = useNavigation();
 
-export default function App() {
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
+  const requestUserPermisson = async () => {
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  }
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    const getToken = async () => {
+      if (requestUserPermisson()) {
+        // return fcm token for device
+        const token = await messaging().getToken();
+        console.log(token);
 
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
+        // Send FCM-POST-Anfrage
+        await fetch('https://fcm.googleapis.com/fcm/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `AAAAUXtS26E:APA91bGeavrnPN_5r3p7OYXWpUBIGGDqm7pTPWzgx9cUyk3C7zXqFhA9MK3UmhVvHKHwTanmtHhILOX9d4mg7HK8S9oAo0EIE6li3Fdi978e_0npmg89d_vkakcXwGet3cgSRxVYR9gN`,
+          },
+          body: JSON.stringify({
+            to: token,
+            priority: 'normal',
+            data: {
+              title: "📧 You've got mail",
+              message: 'Hello world! 🌐',
+            },
+          }),
+        });
+      }
+      else {
+        console.log("Failed token status", authStatus);
+      }
+    }
+
+    getToken();
+
+    // Check whether an initial notification is available
+    messaging()
+      .getInitialNotification()
+      .then(async (remoteMessage) => {
+        if (remoteMessage) {
+          console.log(
+            'Notification caused app to open from quit state:',
+            remoteMessage.notification,
+          );
+        }
+      });
+
+    // Assume a message-notification contains a "type" property in the data payload of the screen to open
+
+    messaging().onNotificationOpenedApp(async (remoteMessage) => {
+      console.log(
+        'Notification caused app to open from background state:',
+        remoteMessage.notification,
+      );
+      // Navigation zum Datentyp
+      //navigation.navigate(remoteMessage.data.type);
     });
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
+    // Register background handler
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('Message handled in the background!', remoteMessage);
     });
 
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    const getTokenAsync = async () => {
+      const token = (await Notifications.getDevicePushTokenAsync()).data;
+      console.log(token);
     };
-  }, []);
+
+    getTokenAsync();
+
+    return unsubscribe;
+  }, [])
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-      }}>
-      <Text>Your expo push token: {expoPushToken}</Text>
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Title: {notification && notification.request.content.title} </Text>
-        <Text>Body: {notification && notification.request.content.body}</Text>
-        <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
-      </View>
-      <Button
-        title="Press to schedule a notification"
-        onPress={async () => {
-          await schedulePushNotification();
-        }}
-      />
+    <View>
+      <Text>Gedankensenf</Text>
+      <StatusBar style='auto'/>
     </View>
   );
-}
-
-export async function schedulePushNotification() {
-  const randomText = await getRandomTextFromDatabase(); // Abrufen eines zufälligen Texts aus der Datenbank
-
-  if (randomText) {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Dein täglicher Senf ist da!",
-        body: randomText,
-        data: { data: 'goes here' },
-      },
-      trigger: { seconds: 2 * 60 },       // zum testen alle 2 Minuten
-      // trigger: { seconds: 60 * 60 * 24 }, //  alle 24 Stunden
-    });
-  }
-}
-
-async function getRandomTextFromDatabase() {   // Funktion für zufälligen Text aus der Datenbank
-  const snapshot = await db.ref('textData').once('value');
-  const textData = snapshot.val();
-
-  if (textData) {
-    const keys = Object.keys(textData);
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
-    return textData[randomKey];
-  }
-
-  return null;
-}
-
-
-
-export async function registerForPushNotificationsAsync() {
-  let token;
-
-  if (Platform.OS === 'android') {
-    await Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
-    });
-  }
-
-  if (Device.isDevice) {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
-  } else {
-    alert('Must use physical device for Push Notifications');
-  }
-
-  return token;
 }
