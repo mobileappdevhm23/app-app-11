@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Text, View, Button, Platform } from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import { db } from '../config/firebase';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -57,18 +58,38 @@ export default function App() {
   );
 }
 
-async function schedulePushNotification() {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "You've got mail! 📬",
-      body: 'Here is the notification body',
-      data: { data: 'goes here' },
-    },
-    trigger: { seconds: 2 },
-  });
+export async function schedulePushNotification() {
+  const randomText = await getRandomTextFromDatabase(); // Abrufen eines zufälligen Texts aus der Datenbank
+
+  if (randomText) {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Dein täglicher Senf ist da!",
+        body: randomText,
+        data: { data: 'goes here' },
+      },
+      trigger: { seconds: 2 * 60 },       // zum testen alle 2 Minuten
+      // trigger: { seconds: 60 * 60 * 24 }, //  alle 24 Stunden
+    });
+  }
 }
 
-async function registerForPushNotificationsAsync() {
+async function getRandomTextFromDatabase() {   // Funktion für zufälligen Text aus der Datenbank
+  const snapshot = await db.ref('textData').once('value');
+  const textData = snapshot.val();
+
+  if (textData) {
+    const keys = Object.keys(textData);
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    return textData[randomKey];
+  }
+
+  return null;
+}
+
+
+
+export async function registerForPushNotificationsAsync() {
   let token;
 
   if (Platform.OS === 'android') {
