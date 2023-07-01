@@ -15,13 +15,20 @@ export default function Home() {
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate('Senfabgabe')}
-                      // onPress={handleConfirm}
-          >
-            <Text style={styles.buttonText}>Senf abgeben</Text>
+        // onPress={handleConfirm}
+        >
+          <Text style={styles.buttonText}>Senf abgeben</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Senflesen')}
+        // onPress={handleConfirm}
+        >
+          <Text style={styles.buttonText}>täglicher Senf</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.imageContainer}>
-        
+
       </View>
 
       <StatusBar style="auto" />
@@ -42,11 +49,11 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 45,
     borderRadius: 25,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   buttonContainer: {
     position: 'absolute',
-    top: '50%',
+    top: '40%',
     transform: [{ translateY: -25 }],
   },
   buttonText: {

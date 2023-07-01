@@ -31,35 +31,38 @@ export default function Senflesen() {
         };
     }, []);
 
-    const handleConfirm = async () => {
-        try {
-            // Speichern des Texts in Firebase unter der Benutzer-ID
-            await set(ref(db, 'inputs/' + userId), text);
+    // const handleConfirm = async () => {
+    //     try {
+    //         // Speichern des Texts in Firebase unter der Benutzer-ID
+    //         await set(ref(db, 'inputs/' + userId), text);
 
-            // Navigieren zum Bestätigungsbildschirm
-            navigation.navigate('Senflesen');
-        } catch (error) {
-            console.error("Fehler beim Speichern des Texts:", error);
-        }
-    };
+    //         // Navigieren zum Bestätigungsbildschirm
+    //         navigation.navigate('Senflesen');
+    //     } catch (error) {
+    //         console.error("Fehler beim Speichern des Texts:", error);
+    //     }
+    // };
+
 
     return (
         <View style={styles.container}>
             <Image source={require('../img/Senf.png')} style={styles.backgroundImage} />
-            <View style={styles.contentContainer}>
+            <View style={styles.roundBox}>
                 <Text style={styles.text}
                     multiline={true}
-                    textAlignVertical="top">{randomText}</Text>
-                <StatusBar style="auto" />
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={handleConfirm}
-                    >
-                        <Text style={styles.buttonText}>Fertig</Text>
-                    </TouchableOpacity>
-                </View>
+                    textAlignVertical="top">{randomText}
+                </Text>
             </View>
+            <StatusBar style="auto" />
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigation.navigate('Home')}
+                >
+                    <Text style={styles.buttonText}>Zurück</Text>
+                </TouchableOpacity>
+            </View>
+
             <StatusBar style="auto" />
         </View>
     );
@@ -87,19 +90,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
-        width: 320,
-        height: 250,
-        margin: 12,
-        borderWidth: 0.5,
-        borderRadius: 15,
-        borderColor: hexToRgba('#A7A7A7', 0.9),
-        backgroundColor: hexToRgba('#FCFAF1', 0.9),
-        padding: 10,
+        textAlign: 'justify',
+        marginTop: 10,
+        marginLeft: 15,
+        paddingRight: 30,
+        width: 300,
+        height: 300,
+        // margin: 12,
+        // padding: 10,
     },
     buttonContainer: {
         alignItems: 'center',
-        paddingLeft: 200,
-        paddingTop: 300,
+        paddingTop: 100,
     },
     button: {
         backgroundColor: '#E6B31E',
@@ -113,11 +115,11 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
     },
-    contentContainer: {
-        flex: 1,
-        alignItems: 'baseline',
-        justifyContent: 'center',
-    },
+    // contentContainer: {
+    //     flex: 1,
+    //     alignItems: 'baseline',
+    //     justifyContent: 'center',
+    // },
     backgroundImage: {
         bottom: -5,
         left: 1,
@@ -129,4 +131,13 @@ const styles = StyleSheet.create({
         opacity: 0.8,
         zIndex: -1,
     },
+    roundBox: {
+        borderWidth: 0.5,
+        borderRadius: 15,
+        borderColor: hexToRgba('#A7A7A7', 0.9),
+        backgroundColor: hexToRgba('#FCFAF1', 0.9),
+        marginTop: 100,
+        width: 300,
+        height: 300,
+    }
 });

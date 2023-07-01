@@ -21,7 +21,7 @@ export default function Senfabgabe() {
             await set(ref(db, 'inputs/' + userId), text);
 
             // Navigieren zum Bestätigungsbildschirm
-            navigation.navigate('Senflesen');
+            navigation.navigate('Senfgespeichert');
         } catch (error) {
             console.error("Fehler beim Speichern des Texts:", error);
         }
