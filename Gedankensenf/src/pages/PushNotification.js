@@ -3,7 +3,6 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
-// import messaging from '@react-native-firebase/messaging';
 
 export default function PushNotification() {
   const navigation = useNavigation();
@@ -94,7 +93,8 @@ export default function PushNotification() {
   return (
     <View>
       <Text>Gedankensenf</Text>
-      <StatusBar style='auto' />
+      <StatusBar style='auto'/>
     </View>
   );
 }
+
