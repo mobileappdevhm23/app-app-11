@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../pages/Home';
-import Senfabgabe from '../pages/Senfabgabe';
+import Home from './src/pages/Home';
+import Senfabgabe from './src/pages/Senfabgabe';
 import * as Notifications from 'expo-notifications';
-import Senfgespeichert from '../pages/Senfgespeichert';
-import SignIn from '../AuthStack/SignIn';
-import "../config/firebase";
-import SignUp from "../AuthStack/SignUp"
-import Senflesen from '../pages/Senflesen';
+import Senfgespeichert from './src/pages/Senfgespeichert';
+import SignIn from './src/AuthStack/SignIn';
+import "./src/config/firebase";
+import SignUp from "./src/AuthStack/SignUp"
+import Senflesen from './src/pages/Senflesen';
 
 // import PushNotification from '../pages/PushNotification';
 // import messaging from '@react-native-firebase/messaging';

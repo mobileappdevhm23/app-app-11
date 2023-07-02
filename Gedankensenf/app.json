@@ -15,16 +15,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.Gedankensenf"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/Senf_a_icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.Gedankensenf"
     },
     "web": {
       "favicon": "./assets/Senf_favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a9c58619-6501-44c0-8458-96912e9e21ed"
+      }
     }
   }
 }
