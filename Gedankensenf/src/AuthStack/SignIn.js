@@ -6,6 +6,7 @@ import { FirebaseError } from "firebase/app";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from 'react-native';
 import { registerForPushNotificationsAsync, schedulePushNotification } from '../pages/PushNotification';
+import { Notifications } from 'expo';
 
 
 export default function SignIn() {
@@ -17,6 +18,7 @@ export default function SignIn() {
     password: "",
     error: "",
   });
+
 
   const signUp = async () => {
     if (value.email === "" || value.password === "") {
@@ -30,16 +32,6 @@ export default function SignIn() {
     try {
       await signInWithEmailAndPassword(auth, value.email, value.password);
 
-
-      // Wenn der Login erfolgreich ist, registrieren Sie für Push-Benachrichtigungen
-      const pushToken = await registerForPushNotificationsAsync();
-
-      // Planen Sie hier Ihre tägliche Benachrichtigung
-      if (pushToken) {
-        schedulePushNotification();
-      }
-
-
       navigation.navigate('Home');
     } catch (error) {
       setValue({
@@ -48,6 +40,9 @@ export default function SignIn() {
       });
     }
   };
+
+
+
 
   return (
     <View style={styles.container}>

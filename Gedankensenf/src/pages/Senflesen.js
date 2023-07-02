@@ -13,6 +13,7 @@ export default function Senflesen() {
     const userId = auth.currentUser.uid;
     const db = getDatabase();
 
+
     useEffect(() => {
         const textsRef = ref(db, 'inputs');
         const listener = onValue(textsRef, (snapshot) => {

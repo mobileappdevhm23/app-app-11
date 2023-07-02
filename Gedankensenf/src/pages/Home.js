@@ -5,9 +5,33 @@ import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 //import PushNotifications from './PushNotification';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
+import { Notifications } from 'expo';
 
 export default function Home() {
   const navigation = useNavigation();
+
+
+
+  // Notifications.setNotificationHandler({
+  //   handleNotification: async () => ({
+  //     shouldShowAlert: true,
+  //     shouldPlaySound: false,
+  //     shouldSetBadge: false,
+  //   }),
+  // });
+
+  // // Second, call the method
+
+  // Notifications.scheduleNotificationAsync({
+  //   content: {
+  //     title: 'Gedankensenf',
+  //     body: "Dein täglicher Senf ist da!",
+  //   },
+  //   trigger: null,
+  // });
+
+
+
 
   return (
     <View style={styles.container}>
