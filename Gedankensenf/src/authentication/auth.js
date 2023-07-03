@@ -1,3 +1,6 @@
+// Code wurde mithilfe des Codes aus dem Projekt Firebase-Auth-in-Expo (https://github.com/liegsalz/Firebase-Auth-in-Expo) aufgesetzt
+// es lassen sind hier viele Elemnte aus dem Code wiederzufinden
+
 const auth = firebase.auth();
 
 export const useAuthentication = () => {

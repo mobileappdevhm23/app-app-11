@@ -5,6 +5,8 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from 'react-native';
+// Code wurde mithilfe des Codes aus dem Projekt Firebase-Auth-in-Expo (https://github.com/liegsalz/Firebase-Auth-in-Expo) aufgesetzt
+// es lassen sind hier viele Elemnte aus dem Code wiederzufinden
 
 export default function SignUpScreen() {
   const auth = getAuth();
